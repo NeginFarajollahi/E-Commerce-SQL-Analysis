@@ -14,8 +14,8 @@ This repository contains advanced SQL analytics performed on the [Brazilian E-Co
 ## 📅 Daily Progress Tracker
 - [x] **Day 1:** Environment Setup & Database Architecture
 - [x] **Day 2:** Logistics Bottlenecks & VIP Customer Identification (`JOIN`, `GROUP BY`, Date Math)
-- [x] **Day 3:** Category Best-Sellers (`Window Functions`, `PARTITION BY`) - 
-- [ ] **Day 4:** Customer Retention & Cohort Analysis - 
+- [x] **Day 3:** Category Best-Sellers (`Window Functions`, `PARTITION BY`) 
+- [x] **Day 4:** Customer Retention & Cohort Analysis 
 
 ---
 *Note: Due to data privacy and size constraints, the raw 100MB+ database file is not hosted in this repository. All queries are designed to run on the standard Kaggle Olist schema.*
