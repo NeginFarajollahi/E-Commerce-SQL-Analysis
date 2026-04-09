@@ -72,3 +72,25 @@ SELECT
     price
 FROM RankedProducts
 WHERE rank = 1;
+
+
+-- ==================================================================================
+-- CHALLENGE 4: Loyal Customer Analysis (Customer Retention)
+-- Business Question: Who are our repeat customers, and how much have they spent?
+-- ==================================================================================
+-- Logic:
+-- 1. Joined customers, orders, and payments to track individual purchasing history.
+-- 2. Grouped by customer_unique_id to aggregate metrics per individual.
+-- 3. Used the HAVING clause to filter the grouped data, keeping ONLY customers 
+--    who have made strictly more than 1 order (our retained users).
+
+SELECT
+    c.customer_unique_id,
+    COUNT(DISTINCT o.order_id) AS total_orders,
+    ROUND(SUM(op.payment_value), 2) AS total_spent
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN order_payments op ON o.order_id = op.order_id
+GROUP BY c.customer_unique_id
+HAVING COUNT(DISTINCT o.order_id) > 1
+ORDER BY total_orders DESC;
