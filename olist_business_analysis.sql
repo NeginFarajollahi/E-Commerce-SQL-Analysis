@@ -44,3 +44,31 @@ JOIN order_payments op ON o.order_id = op.order_id
 GROUP BY c.customer_unique_id
 ORDER BY total_spent DESC
 LIMIT 10;
+
+
+-- ==================================================================================
+-- CHALLENGE 3: Premium Products Leaderboard (Window Functions)
+-- Business Question: What is the single most expensive product in each category?
+-- ==================================================================================
+-- Logic:
+-- 1. Used a Common Table Expression (CTE) to create a temporary ranked table.
+-- 2. Used ROW_NUMBER() OVER(PARTITION BY category ORDER BY price DESC) to 
+--    isolate and rank products within their specific categories.
+-- 3. Filtered the CTE for rank = 1 to extract only the top premium product per category.
+
+WITH RankedProducts AS (
+    SELECT 
+        pt.product_category_name_english,
+        oi.product_id,
+        oi.price,
+        ROW_NUMBER() OVER(PARTITION BY pt.product_category_name_english ORDER BY oi.price DESC) as rank
+    FROM order_items oi
+    JOIN products p ON oi.product_id = p.product_id
+    JOIN product_category_name_translation pt ON p.product_category_name = pt.product_category_name
+)
+SELECT 
+    product_category_name_english,
+    product_id,
+    price
+FROM RankedProducts
+WHERE rank = 1;
